@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Desafio4All</string>
+    <string name="title_activity_main_screen">MainScreen</string>
 </resources>

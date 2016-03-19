@@ -1,11 +1,24 @@
-package com.efb.desafio4all;
+package com.efb.desafio4all.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.efb.desafio4all.MainScreen;
+import com.efb.desafio4all.R;
+import com.efb.desafio4all.model.Local;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -16,14 +29,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private Context mContext;
     private ArrayList<String> mItens;
+    private String id;
 
     public MyAdapter(Context context, ArrayList<String> itens) {
         this.mContext = context;
         this.mItens = itens;
-    }
-
-    public int teste(){
-        return 9;
     }
 
     @Override
@@ -35,7 +45,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        String id = mItens.get(position);
+        id = mItens.get(position);
         holder.textView.setText(id);
     }
 
@@ -44,9 +54,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return mItens.size();
     }
 
-
-
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private Context contextt;
         private TextView textView;
@@ -54,12 +62,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public MyViewHolder(Context contextt, View itemView) {
             super(itemView);
             this.contextt = contextt;
+            itemView.setOnClickListener(this);
             textView = (TextView)itemView.findViewById(R.id.localId);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Log.d("teste", "onClick " + getAdapterPosition());
+            Intent intent = new Intent(this.contextt, MainScreen.class);
+            intent.putExtra("id",id);
+            this.contextt.startActivity(intent);
         }
     }
 
-    public void setData(ArrayList<String> data) {
-        mItens = data;
-        //Fechar o load.
-    }
+
 }
