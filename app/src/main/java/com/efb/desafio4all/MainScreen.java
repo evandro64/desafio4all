@@ -1,20 +1,25 @@
 package com.efb.desafio4all;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.util.LruCache;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.efb.desafio4all.model.Local;
@@ -24,6 +29,9 @@ public class MainScreen extends AppCompatActivity {
 
     private Local selectedLocal;
     private ProgressBar progress;
+    private String urlImage;
+    private ImageLoader imageLoader;
+    private NetworkImageView nwImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +41,29 @@ public class MainScreen extends AppCompatActivity {
         toolbar.setTitle("Tela Principal");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //imageView = (ImageView)findViewById(R.id.imageView);
+
+        // NetWorkImageView
+        nwImg = (NetworkImageView) findViewById(R.id.netWorkImageView);
+        nwImg.setDefaultImageResId(R.drawable.load);
+        nwImg.setErrorImageResId(R.drawable.error);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        imageLoader = new ImageLoader(queue, new ImageLoader.ImageCache() {
+            private final LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(10);
+            @Override
+            public Bitmap getBitmap(String url) {
+                cache.get(url);
+                return null;
+            }
+
+            @Override
+            public void putBitmap(String url, Bitmap bitmap) {
+                cache.put(url, bitmap);
+            }
+        });
 
         progress = (ProgressBar)findViewById(R.id.progressBarLocal);
 
@@ -60,6 +91,8 @@ public class MainScreen extends AppCompatActivity {
                         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
                         toolbar.setSubtitle(selectedLocal.getCidade() + " - " + selectedLocal.getBairro());
                         Log.v("teste", "Response " + response);
+                        urlImage = selectedLocal.getUrlFoto();
+                        nwImg.setImageUrl(urlImage, imageLoader);
                         /*Log.v("teste", "Cidade: " + selectedLocal.getCidade());
                         Log.v("teste", "Bairro: " + selectedLocal.getBairro());
                         Log.v("teste", "Telefone: " + selectedLocal.getTelefone());

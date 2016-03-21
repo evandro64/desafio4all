@@ -9,8 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.efb.desafio4all.MainScreen"
-    tools:showIn="@layout/main_screen">
+    tools:context="com.efb.desafio4all.MainScreen">
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -18,5 +17,13 @@
         android:id="@+id/progressBarLocal"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/netWorkImageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
