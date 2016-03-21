@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -27,8 +28,11 @@ public class MainScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        setContentView(R.layout.main_screen);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Tela Principal");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progress = (ProgressBar)findViewById(R.id.progressBarLocal);
 
@@ -41,6 +45,8 @@ public class MainScreen extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://dev.4all.com:3003/tarefa/" + id ;
+        Log.v("teste", "URL " + url);
+        //String url = "http://dev.4all.com:3003/tarefa/1" ;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -51,13 +57,16 @@ public class MainScreen extends AppCompatActivity {
                         //Local local;
                         Gson gson = new Gson();
                         selectedLocal = gson.fromJson(response, Local.class);
-                        Log.v("teste", "Cidade: " + selectedLocal.getCidade());
+                        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                        toolbar.setSubtitle(selectedLocal.getCidade() + " - " + selectedLocal.getBairro());
+                        Log.v("teste", "Response " + response);
+                        /*Log.v("teste", "Cidade: " + selectedLocal.getCidade());
                         Log.v("teste", "Bairro: " + selectedLocal.getBairro());
                         Log.v("teste", "Telefone: " + selectedLocal.getTelefone());
                         Log.v("teste", "Texto: " + selectedLocal.getTexto());
                         Log.v("teste", "Latitude: " + selectedLocal.getLatitude());
-                        Log.v("teste", "Longitude: " + selectedLocal.getLongitude());
-                        //progress.setVisibility(View.INVISIBLE);
+                        Log.v("teste", "Longitude: " + selectedLocal.getLongitude());*/
+                        progress.setVisibility(View.INVISIBLE);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -68,7 +77,18 @@ public class MainScreen extends AppCompatActivity {
         });
 
         // Add the request to the RequestQueue.
+        Log.v("teste", "String request! " + stringRequest);
         queue.add(stringRequest);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        // Retorna para Activity anterior
+        if (id == android.R.id.home){
+            finish();
+            return (true);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

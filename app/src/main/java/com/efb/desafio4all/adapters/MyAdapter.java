@@ -30,6 +30,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private Context mContext;
     private ArrayList<String> mItens;
     private String id;
+    private String selectId;
 
     public MyAdapter(Context context, ArrayList<String> itens) {
         this.mContext = context;
@@ -69,8 +70,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         @Override
         public void onClick(View v) {
             Log.d("teste", "onClick " + getAdapterPosition());
+            selectId = mItens.get(getAdapterPosition());
             Intent intent = new Intent(this.contextt, MainScreen.class);
-            intent.putExtra("id",id);
+            intent.putExtra("id",selectId);
             this.contextt.startActivity(intent);
         }
     }
