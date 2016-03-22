@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -36,7 +37,7 @@ public class MainScreen extends AppCompatActivity {
     private String urlImage, telefone;
     private ImageLoader imageLoader;
     private NetworkImageView nwImg;
-    private TextView title;
+    private TextView title, text, endereco;
     private ImageView buttonLigar;
     private ImageView buttonServicos;
     private ImageView buttonEnderecos;
@@ -55,10 +56,14 @@ public class MainScreen extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         title = (TextView)findViewById(R.id.title);
+        text = (TextView)findViewById(R.id.textViewText);
+        endereco = (TextView)findViewById(R.id.endereco);
+
         buttonLigar = (ImageView)findViewById(R.id.imageButton);
         buttonServicos = (ImageView)findViewById(R.id.imageButton2);
         buttonEnderecos = (ImageView)findViewById(R.id.imageButton3);
         buttonComentarios = (ImageView)findViewById(R.id.imageButton4);
+        buttonFavoritos = (ImageView)findViewById(R.id.imageButton5);
         buttonFavoritos = (ImageView)findViewById(R.id.imageButton5);
 
         // NetWorkImageView
@@ -113,6 +118,8 @@ public class MainScreen extends AppCompatActivity {
                         title.setText(selectedLocal.getTitulo());
                         telefone = selectedLocal.getTelefone();
                         mLocal = new LatLng(selectedLocal.getLatitude(),selectedLocal.getLongitude());
+                        text.setText(selectedLocal.getTexto());
+                        endereco.setText(selectedLocal.getEndereco());
                         /*Log.v("teste", "Cidade: " + selectedLocal.getCidade());
                         Log.v("teste", "Bairro: " + selectedLocal.getBairro());
                         Log.v("teste", "Telefone: " + selectedLocal.getTelefone());
