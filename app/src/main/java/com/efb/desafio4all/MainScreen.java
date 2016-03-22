@@ -2,6 +2,7 @@ package com.efb.desafio4all;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,9 +31,15 @@ public class MainScreen extends AppCompatActivity {
 
     private Local selectedLocal;
     private ProgressBar progress;
-    private String urlImage;
+    private String urlImage, telefone;
     private ImageLoader imageLoader;
     private NetworkImageView nwImg;
+    private TextView title;
+    private ImageView buttonLigar;
+    private ImageView buttonServicos;
+    private ImageView buttonEnderecos;
+    private ImageView buttonComentarios;
+    private ImageView buttonFavoritos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +50,12 @@ public class MainScreen extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //imageView = (ImageView)findViewById(R.id.imageView);
+        title = (TextView)findViewById(R.id.title);
+        buttonLigar = (ImageView)findViewById(R.id.imageButton);
+        buttonServicos = (ImageView)findViewById(R.id.imageButton2);
+        buttonEnderecos = (ImageView)findViewById(R.id.imageButton3);
+        buttonComentarios = (ImageView)findViewById(R.id.imageButton4);
+        buttonFavoritos = (ImageView)findViewById(R.id.imageButton5);
 
         // NetWorkImageView
         nwImg = (NetworkImageView) findViewById(R.id.netWorkImageView);
@@ -93,6 +106,8 @@ public class MainScreen extends AppCompatActivity {
                         Log.v("teste", "Response " + response);
                         urlImage = selectedLocal.getUrlFoto();
                         nwImg.setImageUrl(urlImage, imageLoader);
+                        title.setText(selectedLocal.getTitulo());
+                        telefone = selectedLocal.getTelefone();
                         /*Log.v("teste", "Cidade: " + selectedLocal.getCidade());
                         Log.v("teste", "Bairro: " + selectedLocal.getBairro());
                         Log.v("teste", "Telefone: " + selectedLocal.getTelefone());
@@ -123,5 +138,39 @@ public class MainScreen extends AppCompatActivity {
             return (true);
         }
         return super.onOptionsItemSelected(item);
+    }
+    /*public void onClickLigar(View v){
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:"+telefone));
+        startActivity(intent);
+    }
+
+    public void onClickServicos(View v){
+        Intent intent = new Intent(MainScreen.this, ServicesActivity.class);
+        startActivity(intent);
+    }*/
+
+    public void onClick(View v){
+        Intent intent;
+        switch(v.getId()) {
+            case R.id.imageButton:
+                intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+telefone));
+                startActivity(intent);
+                break;
+            case R.id.imageButton2:
+                intent = new Intent(MainScreen.this, ServicesActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.imageButton3:
+                // ToDo
+                break;
+            case R.id.imageButton4:
+                // ToDo
+                break;
+            default:
+                // ToDo;
+        }
+
     }
 }
