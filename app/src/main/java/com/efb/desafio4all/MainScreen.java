@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.LruCache;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,7 +24,9 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.efb.desafio4all.fragments.Map_Fragment;
 import com.efb.desafio4all.model.Local;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
 public class MainScreen extends AppCompatActivity {
@@ -40,9 +42,11 @@ public class MainScreen extends AppCompatActivity {
     private ImageView buttonEnderecos;
     private ImageView buttonComentarios;
     private ImageView buttonFavoritos;
+    private LatLng mLocal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -108,6 +112,7 @@ public class MainScreen extends AppCompatActivity {
                         nwImg.setImageUrl(urlImage, imageLoader);
                         title.setText(selectedLocal.getTitulo());
                         telefone = selectedLocal.getTelefone();
+                        mLocal = new LatLng(selectedLocal.getLatitude(),selectedLocal.getLongitude());
                         /*Log.v("teste", "Cidade: " + selectedLocal.getCidade());
                         Log.v("teste", "Bairro: " + selectedLocal.getBairro());
                         Log.v("teste", "Telefone: " + selectedLocal.getTelefone());
@@ -163,7 +168,7 @@ public class MainScreen extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.imageButton3:
-                // ToDo
+                showMap(mLocal);
                 break;
             case R.id.imageButton4:
                 // ToDo
@@ -171,6 +176,15 @@ public class MainScreen extends AppCompatActivity {
             default:
                 // ToDo;
         }
+    }
 
+    /**
+     * Cria uma nova instância do fragment que possui o mapa de acordo com a opção escolhida
+     * (botão clicado) e exibe na tela.
+     */
+    private void showMap(LatLng local) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container_map, Map_Fragment.newInstance(local)).commitAllowingStateLoss();
     }
 }

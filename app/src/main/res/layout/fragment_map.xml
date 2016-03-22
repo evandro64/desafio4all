@@ -1,0 +1,24 @@
+<!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/container_map"
+        tools:context=".MapsActivity"
+        android:name="com.efb.desafio4all.fragments.Map_Fragment"
+        tools:layout="@layout/fragment_map" >
+
+        <com.google.android.maps.MapView
+            android:id="@+id/map"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:enabled="true"
+            android:clickable="true"
+            android:apiKey="AIzaSyCL-H7bSYAklLig9clpv3jq6dY2wxInhHo"/>
+
+</fragment>-->
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/map"
+    android:layout_width="match_parent"
+    android:layout_height="400dp" />
