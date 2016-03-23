@@ -3,32 +3,28 @@ package com.efb.desafio4all;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.util.LruCache;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,7 +35,6 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.efb.desafio4all.adapters.ComentsAdapter;
-import com.efb.desafio4all.adapters.MyAdapter;
 import com.efb.desafio4all.fragments.Map_Fragment;
 import com.efb.desafio4all.model.Comentarios;
 import com.efb.desafio4all.model.Local;
@@ -68,6 +63,8 @@ public class MainScreen extends AppCompatActivity {
     private ArrayList<Comentarios> mComents;
     private Context mContext;
 
+    private float dpHeight;
+
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -81,6 +78,14 @@ public class MainScreen extends AppCompatActivity {
         toolbar.setTitle("Tela Principal");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics ();
+        display.getMetrics(outMetrics);
+
+        float density  = getResources().getDisplayMetrics().density;
+        dpHeight = outMetrics.heightPixels / density;
+        float dpWidth  = outMetrics.widthPixels / density;
 
         mContext = this;
 
@@ -101,6 +106,16 @@ public class MainScreen extends AppCompatActivity {
         // NetWorkImageView
         nwImg = (NetworkImageView) findViewById(R.id.netWorkImageView);
         nwImg.setDefaultImageResId(R.drawable.load);
+
+        Configuration config = getResources().getConfiguration();
+        if (config.smallestScreenWidthDp < 480)
+        {
+            ViewGroup.LayoutParams layoutParams = ((ImageView)nwImg).getLayoutParams();
+            layoutParams.height = (int)Math.round((dpWidth)*2);
+            //layoutParams.height = (int)Math.round(dpWidth);
+            ((ImageView)nwImg).setLayoutParams(layoutParams);
+        }
+
         nwImg.setErrorImageResId(R.drawable.error);
 
         // Adapter dos comentários
@@ -114,6 +129,7 @@ public class MainScreen extends AppCompatActivity {
             private final LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(10);
             @Override
             public Bitmap getBitmap(String url) {
+                //int teste = cache.maxSize();
                 cache.get(url);
                 return null;
             }
@@ -136,15 +152,11 @@ public class MainScreen extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://dev.4all.com:3003/tarefa/" + id ;
         Log.v("teste", "URL " + url);
-        //String url = "http://dev.4all.com:3003/tarefa/1" ;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        //ArrayList<Local> retorno = new ArrayList<>();
-                        //Local local;
                         Gson gson = new Gson();
                         selectedLocal = gson.fromJson(response, Local.class);
                         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -204,7 +216,9 @@ public class MainScreen extends AppCompatActivity {
                 alertMessage();
                 break;
             case R.id.imageButton4:
-                // ToDo
+                ScrollView scrollView = (ScrollView) findViewById(R.id.scrool);
+                int teste = (int)Math.round((dpHeight)*0.7);
+                scrollView.scrollTo(0,teste);
                 break;
             default:
                 // ToDo;
