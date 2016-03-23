@@ -13,6 +13,8 @@
         android:layout_height="wrap_content" />
 
     <ScrollView
+        android:fillViewport="true"
+        android:background="#E0DFDF"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
@@ -51,6 +53,7 @@
             android:id="@+id/linearButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#FFFFFF"
             android:orientation="horizontal"
             android:layout_below="@+id/title">
 
@@ -106,6 +109,7 @@
             android:id="@+id/linearText"
             android:orientation="horizontal"
             android:layout_width="match_parent"
+            android:background="#FFFFFF"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linearButtons">
 
@@ -122,7 +126,9 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearMap"
             android:orientation="vertical"
+            android:paddingBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linearText">
@@ -132,12 +138,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp" >
 
-
             </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="8dp"
+                android:layout_height="16dp"
                 android:background="@color/colorPrimary"
                 android:orientation="horizontal"
                 android:gravity="right"
@@ -146,20 +151,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#FFFFFF"
-                    android:paddingRight="8dp"
-                    android:textSize="4dp"
+                    android:paddingRight="16dp"
+                    android:textSize="12dp"
                     android:id="@+id/endereco" />
             </LinearLayout>
 
-            <!--<com.google.android.maps.MapView
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:id="@+id/map_view"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:enabled="true"
-                android:clickable="true"
-                android:apiKey="AIzaSyCL-H7bSYAklLig9clpv3jq6dY2wxInhHo"/>-->
+        </LinearLayout>
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:paddingTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearMap">
+
+            <!-- A RecyclerView with some commonly used attributes -->
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/my_recycler_view_coments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
 
     </RelativeLayout>

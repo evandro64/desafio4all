@@ -1,21 +1,34 @@
 package com.efb.desafio4all;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.util.LruCache;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,10 +38,15 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.efb.desafio4all.adapters.ComentsAdapter;
+import com.efb.desafio4all.adapters.MyAdapter;
 import com.efb.desafio4all.fragments.Map_Fragment;
+import com.efb.desafio4all.model.Comentarios;
 import com.efb.desafio4all.model.Local;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 public class MainScreen extends AppCompatActivity {
 
@@ -43,7 +61,16 @@ public class MainScreen extends AppCompatActivity {
     private ImageView buttonEnderecos;
     private ImageView buttonComentarios;
     private ImageView buttonFavoritos;
+    private LinearLayout linearMap;
+    private LinearLayout linearEndereco;
     private LatLng mLocal;
+    private AlertDialog alerta;
+    private ArrayList<Comentarios> mComents;
+    private Context mContext;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +81,8 @@ public class MainScreen extends AppCompatActivity {
         toolbar.setTitle("Tela Principal");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mContext = this;
 
         title = (TextView)findViewById(R.id.title);
         text = (TextView)findViewById(R.id.textViewText);
@@ -66,10 +95,18 @@ public class MainScreen extends AppCompatActivity {
         buttonFavoritos = (ImageView)findViewById(R.id.imageButton5);
         buttonFavoritos = (ImageView)findViewById(R.id.imageButton5);
 
+        linearMap = (LinearLayout)findViewById(R.id.linearMap);
+        linearEndereco = (LinearLayout)findViewById(R.id.enderecoMap);
+
         // NetWorkImageView
         nwImg = (NetworkImageView) findViewById(R.id.netWorkImageView);
         nwImg.setDefaultImageResId(R.drawable.load);
         nwImg.setErrorImageResId(R.drawable.error);
+
+        // Adapter dos comentários
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view_coments);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new com.efb.desafio4all.LinearLayoutManager(mRecyclerView.getContext()));
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -119,13 +156,12 @@ public class MainScreen extends AppCompatActivity {
                         telefone = selectedLocal.getTelefone();
                         mLocal = new LatLng(selectedLocal.getLatitude(),selectedLocal.getLongitude());
                         text.setText(selectedLocal.getTexto());
-                        endereco.setText(selectedLocal.getEndereco());
-                        /*Log.v("teste", "Cidade: " + selectedLocal.getCidade());
-                        Log.v("teste", "Bairro: " + selectedLocal.getBairro());
-                        Log.v("teste", "Telefone: " + selectedLocal.getTelefone());
-                        Log.v("teste", "Texto: " + selectedLocal.getTexto());
-                        Log.v("teste", "Latitude: " + selectedLocal.getLatitude());
-                        Log.v("teste", "Longitude: " + selectedLocal.getLongitude());*/
+                        showMap(mLocal);
+                        // Preenche os comentários
+                        mComents = selectedLocal.getComentarios() ;
+                        mAdapter = new ComentsAdapter(mContext, mComents);
+                        mRecyclerView.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
                         progress.setVisibility(View.INVISIBLE);
                     }
                 }, new Response.ErrorListener() {
@@ -151,16 +187,6 @@ public class MainScreen extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    /*public void onClickLigar(View v){
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:"+telefone));
-        startActivity(intent);
-    }
-
-    public void onClickServicos(View v){
-        Intent intent = new Intent(MainScreen.this, ServicesActivity.class);
-        startActivity(intent);
-    }*/
 
     public void onClick(View v){
         Intent intent;
@@ -175,7 +201,7 @@ public class MainScreen extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.imageButton3:
-                showMap(mLocal);
+                alertMessage();
                 break;
             case R.id.imageButton4:
                 // ToDo
@@ -185,13 +211,23 @@ public class MainScreen extends AppCompatActivity {
         }
     }
 
-    /**
-     * Cria uma nova instância do fragment que possui o mapa de acordo com a opção escolhida
-     * (botão clicado) e exibe na tela.
-     */
     private void showMap(LatLng local) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container_map, Map_Fragment.newInstance(local)).commitAllowingStateLoss();
+        endereco.setText(selectedLocal.getEndereco());
+    }
+
+    public void alertMessage(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Endereço");
+        builder.setMessage(selectedLocal.getEndereco());
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                return;
+            }
+        });
+        alerta = builder.create();
+        alerta.show();
     }
 }
