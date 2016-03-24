@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     class="com.google.android.gms.maps.SupportMapFragment"
@@ -8,175 +8,205 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.efb.desafio4all.MainScreen">
 
-    <requestFocus
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <ScrollView
-        android:id="@+id/scrool"
-        android:fillViewport="true"
-        android:background="#E0DFDF"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
-
-    <RelativeLayout android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.android.volley.toolbox.NetworkImageView
-            android:layout_width="match_parent"
-            android:layout_height="480dp"
-            android:id="@+id/netWorkImageView"
-            android:scaleType="fitXY"/>
-
-        <ProgressBar
+        <requestFocus
             android:layout_width="wrap_content"
-            android:layout_height="16dp"
-            android:id="@+id/progressBarLocal"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_height="wrap_content" />
 
-        <TextView
+        <ScrollView
+            android:id="@+id/scrool"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/title"
-            android:paddingRight="16dp"
-            android:paddingLeft="16dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:textColor="@color/colorPrimary"
-            android:layout_below="@+id/netWorkImageView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:background="#E0DFDF"
+            android:fillViewport="true">
 
-        <LinearLayout
-            android:id="@+id/linearButtons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:orientation="horizontal"
-            android:layout_below="@+id/title">
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:id="@+id/imageButton"
-                android:layout_weight="1"
-                android:onClick="onClick"
-                android:src="@drawable/ic_ligar"
-                android:layout_toLeftOf="@+id/progressBarLocal"
-                android:layout_toStartOf="@+id/progressBarLocal" />
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_servicos"
-                android:onClick="onClick"
-                android:id="@+id/imageButton2"
-                android:layout_centerHorizontal="true" />
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:id="@+id/imageButton3"
-                android:layout_weight="1"
-                android:src="@drawable/endereco"
-                android:onClick="onClick"
-                android:paddingBottom="1dp"
-                android:layout_alignLeft="@+id/imageButton"
-                android:layout_alignStart="@+id/imageButton" />
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/ic_comentarios"
-                android:layout_weight="1"
-                android:onClick="onClick"
-                android:id="@+id/imageButton4"
-                android:layout_centerHorizontal="true" />
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:paddingTop="1dp"
-                android:src="@drawable/ic_favoritos"
-                android:id="@+id/imageButton5"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearText"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:background="#FFFFFF"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linearButtons">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:paddingRight="16dp"
-                android:paddingLeft="16dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:id="@+id/textViewText" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearMap"
-            android:orientation="vertical"
-            android:paddingBottom="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linearText">
-
-            <FrameLayout
-                android:id="@+id/container_map"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp" >
+                android:layout_height="match_parent">
 
-            </FrameLayout>
+                <com.android.volley.toolbox.NetworkImageView
+                    android:id="@+id/netWorkImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="480dp"
+                    android:scaleType="fitXY" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="16dp"
-                android:background="@color/colorPrimary"
-                android:orientation="horizontal"
-                android:gravity="right"
-                android:id="@+id/enderecoMap" >
                 <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/netWorkImageView"
+                    android:paddingBottom="12dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="12dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/colorPrimary" />
+
+                <LinearLayout
+                    android:id="@+id/linearButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/title"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageButton"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_toLeftOf="@+id/progressBarLocal"
+                        android:layout_toStartOf="@+id/progressBarLocal"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:src="@drawable/ic_ligar" />
+
+                    <ImageView
+                        android:id="@+id/imageButton2"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:src="@drawable/ic_servicos" />
+
+                    <ImageView
+                        android:id="@+id/imageButton3"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_alignLeft="@+id/imageButton"
+                        android:layout_alignStart="@+id/imageButton"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:paddingBottom="1dp"
+                        android:src="@drawable/endereco" />
+
+                    <ImageView
+                        android:id="@+id/imageButton4"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_weight="1"
+                        android:onClick="onClick"
+                        android:src="@drawable/ic_comentarios" />
+
+                    <ImageView
+                        android:id="@+id/imageButton5"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:paddingTop="1dp"
+                        android:src="@drawable/ic_favoritos" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lineaDivisor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"
-                    android:paddingRight="16dp"
-                    android:textSize="12dp"
-                    android:id="@+id/endereco" />
-            </LinearLayout>
+                    android:layout_below="@+id/linearButtons"
+                    android:background="#FFFFFF"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
 
-        </LinearLayout>
+                    <View
+                        android:id="@+id/divisor"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/linearButtons"
+                        android:background="@color/colorDivisor" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:paddingTop="10dp"
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lineaDivisor"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/colorPrimary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearMap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearText"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:id="@+id/container_map"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp">
+
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:id="@+id/enderecoMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="16dp"
+                        android:background="@color/colorPrimary"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/endereco"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="16dp"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearMap"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/my_recycler_view_coments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+
+            </RelativeLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/framelayoutLocal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background">
+
+        <ProgressBar
+            android:id="@+id/progressBarLocal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linearMap">
+            android:layout_gravity="center" />
 
-            <!-- A RecyclerView with some commonly used attributes -->
+    </FrameLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/my_recycler_view_coments"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+</RelativeLayout>
 
-            </android.support.v7.widget.RecyclerView>
-        </LinearLayout>
-
-    </RelativeLayout>
-    </ScrollView>
-
-</LinearLayout>

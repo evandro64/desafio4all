@@ -11,7 +11,7 @@ public class ServicesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_services);
 
-
+        getSupportActionBar().setTitle(R.string.servicos);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     @Override

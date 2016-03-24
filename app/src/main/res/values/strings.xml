@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Desafio4All</string>
     <string name="title_activity_main_screen">MainScreen</string>
+    <string name="urlListaLocal">http://dev.4all.com:3003/tarefa</string>
+    <string name="tela_principal">Tela Principal</string>
+    <string name="url_local">http://dev.4all.com:3003/tarefa/</string>
+    <string name="endereco">Endereço</string>
+    <string name="ok">OK</string>
+    <string name="servicos">Serviços</string>
+    <string name="lista">Lista</string>
 </resources>

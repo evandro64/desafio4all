@@ -20,11 +20,13 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -62,6 +64,7 @@ public class MainScreen extends AppCompatActivity {
     private AlertDialog alerta;
     private ArrayList<Comentarios> mComents;
     private Context mContext;
+    private FrameLayout fm;
 
     private float dpHeight;
 
@@ -75,9 +78,14 @@ public class MainScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Tela Principal");
+        toolbar.setTitle(R.string.tela_principal);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        fm = (FrameLayout)findViewById(R.id.framelayoutLocal);
+        fm.setVisibility(View.VISIBLE);
+
+        progress = (ProgressBar)findViewById(R.id.progressBarLocal);
 
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics ();
@@ -105,14 +113,14 @@ public class MainScreen extends AppCompatActivity {
 
         // NetWorkImageView
         nwImg = (NetworkImageView) findViewById(R.id.netWorkImageView);
-        nwImg.setDefaultImageResId(R.drawable.load);
+        nwImg.setDefaultImageResId(R.drawable.load3);
 
+        // Verifica resolução da Tela
         Configuration config = getResources().getConfiguration();
         if (config.smallestScreenWidthDp < 480)
         {
             ViewGroup.LayoutParams layoutParams = ((ImageView)nwImg).getLayoutParams();
-            layoutParams.height = (int)Math.round((dpWidth)*2);
-            //layoutParams.height = (int)Math.round(dpWidth);
+            layoutParams.height = (int)Math.round((dpWidth)*1.2);
             ((ImageView)nwImg).setLayoutParams(layoutParams);
         }
 
@@ -129,7 +137,6 @@ public class MainScreen extends AppCompatActivity {
             private final LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(10);
             @Override
             public Bitmap getBitmap(String url) {
-                //int teste = cache.maxSize();
                 cache.get(url);
                 return null;
             }
@@ -150,9 +157,8 @@ public class MainScreen extends AppCompatActivity {
     public void getSelectLocal(String id){
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://dev.4all.com:3003/tarefa/" + id ;
+        String url = getString(R.string.url_local) + id ;
         Log.v("teste", "URL " + url);
-
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -174,13 +180,14 @@ public class MainScreen extends AppCompatActivity {
                         mAdapter = new ComentsAdapter(mContext, mComents);
                         mRecyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
-                        progress.setVisibility(View.INVISIBLE);
+                        fm.setVisibility(View.GONE);
+                        progress.setVisibility(View.GONE);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //mTextView.setText("That didn't work!");
-                Log.v("teste", "Deu Erro! " + error);
+                Log.v("teste", "Erro de conexão! " + error);
+                Toast.makeText(mContext, "Erro! Verifique sua conexão", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -217,8 +224,9 @@ public class MainScreen extends AppCompatActivity {
                 break;
             case R.id.imageButton4:
                 ScrollView scrollView = (ScrollView) findViewById(R.id.scrool);
-                int teste = (int)Math.round((dpHeight)*0.7);
-                scrollView.scrollTo(0,teste);
+                int scroll = (int)Math.round((dpHeight)*1.5);
+                scrollView.scrollTo(0,scroll);
+                if (selectedLocal.getComentarios().isEmpty()) Toast.makeText(mContext, "Nenhum comentário a ser exibido!", Toast.LENGTH_LONG).show();
                 break;
             default:
                 // ToDo;
@@ -234,9 +242,9 @@ public class MainScreen extends AppCompatActivity {
 
     public void alertMessage(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Endereço");
+        builder.setTitle(getString(R.string.endereco));
         builder.setMessage(selectedLocal.getEndereco());
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
                 return;
             }

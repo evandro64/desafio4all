@@ -1,20 +1,24 @@
 package com.efb.desafio4all.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.util.LruCache;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.Volley;
 import com.efb.desafio4all.R;
 import com.efb.desafio4all.model.Comentarios;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
 
@@ -40,13 +44,33 @@ public class ComentsAdapter extends RecyclerView.Adapter<ComentsAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        /*id = mItens.get(position);*/
         holder.nome.setText(mItens.get(position).getNome());
         holder.titulo.setText(mItens.get(position).getTitulo());
         holder.comentario.setText(mItens.get(position).getComentario());
         int nota = mItens.get(position).getNota();
         holder.ratingBar.setRating(nota);
 
+        // Insere requisição de acesso na fila
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+
+        // Busca Imagem
+        ImageLoader imageLoader = new ImageLoader(queue, new ImageLoader.ImageCache() {
+            private final LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(10);
+            @Override
+            public Bitmap getBitmap(String url) {
+                //int teste = cache.maxSize();
+                cache.get(url);
+                return null;
+            }
+
+            @Override
+            public void putBitmap(String url, Bitmap bitmap) {
+                cache.put(url, bitmap);
+            }
+        });
+
+        // Seta foto da URL no ImageView
+        imageLoader.get(mItens.get(position).getUrlFoto(),imageLoader.getImageListener(holder.circularImageView,0,0));
     }
 
     @Override
@@ -57,22 +81,26 @@ public class ComentsAdapter extends RecyclerView.Adapter<ComentsAdapter.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private Context contextt;
-        private ImageView foto;
         private TextView nome;
         private RatingBar ratingBar;
         private TextView titulo;
         private TextView comentario;
+        private CircularImageView circularImageView;
 
         public MyViewHolder(Context contextt, View itemView) {
             super(itemView);
             this.contextt = contextt;
             itemView.setOnClickListener(this);
+
+            circularImageView = (CircularImageView)itemView.findViewById(R.id.circularImage);
+            circularImageView.setBorderColor(mContext.getResources().getColor(R.color.colorAccent));
+            circularImageView.setBorderWidth(2);
+            circularImageView.addShadow();
+            circularImageView.setShadowRadius(15);
+            circularImageView.setShadowColor(Color.rgb(224,139,0));
+
             nome = (TextView)itemView.findViewById(R.id.nome);
             ratingBar = (RatingBar)itemView.findViewById(R.id.ratingBar);
-            /*LayerDrawable layerDrawable = (LayerDrawable) ratingBar.getProgressDrawable();
-            DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(0)), Color.WHITE);   // Empty star
-            DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(1)), Color.YELLOW); // Partial star
-            DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(2)), Color.YELLOW);  // Full star*/
 
             LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
             stars.getDrawable(2).setColorFilter(contextt.getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
@@ -88,5 +116,4 @@ public class ComentsAdapter extends RecyclerView.Adapter<ComentsAdapter.MyViewHo
             //ToDO
         }
     }
-
 }
