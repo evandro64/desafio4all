@@ -1,14 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+
     signingConfigs {
         config {
             keyAlias 'Desafio4allKey'
             keyPassword 'android'
-            storeFile file('C:/Users/barbosev/Documents/Keystores/desafio4allKey.jks')
+            storeFile file('/home/evandro/ProjetosAndroid/desafio4all/desafio4allKey.jks')
             storePassword 'android'
         }
     }
+
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
     defaultConfig {
