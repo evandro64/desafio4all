@@ -32,41 +32,48 @@
                     android:layout_height="fill_parent"
                     android:id="@+id/teste">
 
-                    <com.android.volley.toolbox.NetworkImageView
-                        android:id="@+id/netWorkImageView"
+                    <LinearLayout
+                        android:id="@+id/linearTeste"
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="480dp"
-                        android:scaleType="fitXY" />
+                        android:layout_height="match_parent">
 
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="New Button"
-                        android:id="@+id/button"
-                        android:layout_gravity="bottom|right" />
+                        <com.android.volley.toolbox.NetworkImageView
+                            android:id="@+id/netWorkImageView"
+                            android:layout_width="match_parent"
+                            android:layout_height="480dp"
+                            android:scaleType="fitXY" />
+
+                        <TextView
+                            android:id="@+id/title"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/teste"
+                            android:paddingBottom="12dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingTop="12dp"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="@color/colorPrimary" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
+                        android:id="@+id/estrela"
+                        android:src="@drawable/avatar"
+                        android:layout_below="@+id/linearMap"
+                        android:layout_gravity="right" />
 
                 </FrameLayout>
-
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/teste"
-                    android:paddingBottom="12dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingTop="12dp"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/colorPrimary" />
 
                 <LinearLayout
                     android:id="@+id/linearButtons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/title"
+                    android:layout_below="@+id/teste"
                     android:background="#FFFFFF"
                     android:orientation="horizontal"
                     android:layout_alignParentBottom="false">

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -78,9 +79,11 @@ public class MainScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.tela_principal);
+        //toolbar.setTitle(R.string.tela_principal);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
         fm = (FrameLayout)findViewById(R.id.framelayoutLocal);
         fm.setVisibility(View.VISIBLE);
@@ -123,6 +126,10 @@ public class MainScreen extends AppCompatActivity {
             layoutParams.height = (int)Math.round((dpWidth)*1.2);
             ((ImageView)nwImg).setLayoutParams(layoutParams);
         }
+
+        LinearLayout ll = (LinearLayout)findViewById(R.id.linearTeste);
+        int t1 = ll.getHeight();
+        Log.v("teste","Tamanho do linearLayout: "+t1);
 
         nwImg.setErrorImageResId(R.drawable.error);
 
@@ -170,6 +177,7 @@ public class MainScreen extends AppCompatActivity {
                         Log.v("teste", "Response " + response);
                         urlImage = selectedLocal.getUrlFoto();
                         nwImg.setImageUrl(urlImage, imageLoader);
+
                         title.setText(selectedLocal.getTitulo());
                         telefone = selectedLocal.getTelefone();
                         mLocal = new LatLng(selectedLocal.getLatitude(),selectedLocal.getLongitude());
@@ -182,6 +190,21 @@ public class MainScreen extends AppCompatActivity {
                         mAdapter.notifyDataSetChanged();
                         fm.setVisibility(View.GONE);
                         progress.setVisibility(View.GONE);
+
+                        LinearLayout ll = (LinearLayout)findViewById(R.id.linearTeste);
+                        int t1 = ll.getHeight();
+                        Log.v("teste","Tamanho do linearLayout: "+t1);
+                        ImageView iv = (ImageView)findViewById(R.id.estrela);
+
+                        /*ViewGroup.LayoutParams layoutParams = ((ImageView)iv).getLayoutParams();
+                        layoutParams. = t1;
+                        ((ImageView)iv).setLayoutParams(layoutParams);*/
+
+                        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(150, 150);
+                        lp.setMargins(560, 365, 0, 0);
+                        iv.setLayoutParams(lp);
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override

@@ -21,7 +21,8 @@
         <activity
             android:name=".MainScreen"
             android:label="@string/title_activity_main_screen"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -29,7 +30,7 @@
 
         <activity android:name=".ServicesActivity"></activity>
         <activity android:name=".SplashScreen"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
