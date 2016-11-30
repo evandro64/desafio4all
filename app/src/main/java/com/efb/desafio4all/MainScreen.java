@@ -192,17 +192,23 @@ public class MainScreen extends AppCompatActivity {
                         progress.setVisibility(View.GONE);
 
                         LinearLayout ll = (LinearLayout)findViewById(R.id.linearTeste);
-                        int t1 = ll.getHeight();
-                        Log.v("teste","Tamanho do linearLayout: "+t1);
-                        ImageView iv = (ImageView)findViewById(R.id.estrela);
 
                         /*ViewGroup.LayoutParams layoutParams = ((ImageView)iv).getLayoutParams();
                         layoutParams. = t1;
                         ((ImageView)iv).setLayoutParams(layoutParams);*/
 
                         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(150, 150);
-                        lp.setMargins(560, 365, 0, 0);
+                        lp.setMargins(560, nwImg.getHeight() - 70, 0, 0);
+                        ImageView iv = (ImageView)findViewById(R.id.estrela);
                         iv.setLayoutParams(lp);
+
+                        FrameLayout container = (FrameLayout)findViewById(R.id.container_map);
+
+                        FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(25, 25);
+                        //lp2.setMargins(560, nwImg.getHeight() + container.getHeight(), 0, 0);
+                        lp2.setMargins(765, 190, 0, 0);
+                        ImageView iv2 = (ImageView)findViewById(R.id.imageButton7);
+                        iv2.setLayoutParams(lp2);
 
 
                     }
@@ -257,6 +263,7 @@ public class MainScreen extends AppCompatActivity {
     }
 
     private void showMap(LatLng local) {
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container_map, Map_Fragment.newInstance(local)).commitAllowingStateLoss();

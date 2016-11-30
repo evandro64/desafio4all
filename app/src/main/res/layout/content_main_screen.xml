@@ -29,7 +29,7 @@
 
                 <FrameLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
                     android:id="@+id/teste">
 
                     <LinearLayout
@@ -164,43 +164,57 @@
                         android:textColor="@color/colorPrimary" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/linearMap"
+                <FrameLayout
+                    android:id="@+id/frameMap"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_below="@+id/linearText"
-                    android:orientation="vertical">
-
-                    <FrameLayout
-                        android:id="@+id/container_map"
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp">
-
-                    </FrameLayout>
+                    android:layout_height="match_parent">
 
                     <LinearLayout
-                        android:id="@+id/enderecoMap"
+                        android:id="@+id/linearMap"
                         android:layout_width="match_parent"
-                        android:layout_height="16dp"
-                        android:background="@color/colorPrimary"
-                        android:gravity="right"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/endereco"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="16dp"
-                            android:textColor="#FFFFFF"
-                            android:textSize="12dp" />
+                        <FrameLayout
+                            android:id="@+id/container_map"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp">
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:id="@+id/enderecoMap"
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:background="@color/colorPrimary"
+                            android:gravity="right"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/endereco"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingRight="28dp"
+                                android:textColor="#FFFFFF"
+                                android:textSize="12dp" />
+
+                        </LinearLayout>
+
                     </LinearLayout>
 
-                </LinearLayout>
+                    <ImageButton
+                        android:layout_width="2dp"
+                        android:layout_height="2dp"
+                        android:id="@+id/imageButton7"
+                        android:src="@drawable/avatar"
+                        android:layout_gravity="right" />
+                </FrameLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/linearMap"
+                    android:layout_below="@+id/frameMap"
                     android:orientation="vertical">
 
                     <android.support.v7.widget.RecyclerView
