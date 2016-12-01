@@ -11,9 +11,9 @@
     tools:context="com.efb.desafio4all.SplashScreen">
 
     <ImageView
-        android:layout_width="76dp"
+        android:layout_width="wrap_content"
         android:layout_height="90dp"
         android:id="@+id/imageView"
         android:layout_gravity="center"
-        android:src="@drawable/logo_footer" />
+        android:src="@drawable/fourall" />
 </FrameLayout>

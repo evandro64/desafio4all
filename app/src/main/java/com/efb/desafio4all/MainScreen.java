@@ -193,20 +193,14 @@ public class MainScreen extends AppCompatActivity {
 
                         LinearLayout ll = (LinearLayout)findViewById(R.id.linearTeste);
 
-                        /*ViewGroup.LayoutParams layoutParams = ((ImageView)iv).getLayoutParams();
-                        layoutParams. = t1;
-                        ((ImageView)iv).setLayoutParams(layoutParams);*/
-
                         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(150, 150);
-                        lp.setMargins(560, nwImg.getHeight() - 70, 0, 0);
+                        lp.setMargins(nwImg.getWidth() - 160, nwImg.getHeight() - 70, 0, 0);
                         ImageView iv = (ImageView)findViewById(R.id.estrela);
                         iv.setLayoutParams(lp);
 
                         FrameLayout container = (FrameLayout)findViewById(R.id.container_map);
-
-                        FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(25, 25);
-                        //lp2.setMargins(560, nwImg.getHeight() + container.getHeight(), 0, 0);
-                        lp2.setMargins(765, 190, 0, 0);
+                        FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(40, 40);
+                        lp2.setMargins(container.getWidth()-40, container.getHeight()-20, 0, 0);
                         ImageView iv2 = (ImageView)findViewById(R.id.imageButton7);
                         iv2.setLayoutParams(lp2);
 

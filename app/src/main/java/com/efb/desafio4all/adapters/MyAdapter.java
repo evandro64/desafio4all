@@ -13,7 +13,7 @@ import com.efb.desafio4all.R;
 import java.util.ArrayList;
 
 /**
- * Created by Evandro on 17/03/2016.
+ * Created by Evandro on 30/11/2016.
  */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 

@@ -23,7 +23,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import java.util.ArrayList;
 
 /**
- * Created by Evandro on 22/03/2016.
+ * Created by Evandro on 30/11/2016.
  */
 public class ComentsAdapter extends RecyclerView.Adapter<ComentsAdapter.MyViewHolder>{
 

@@ -1,7 +1,7 @@
 package com.efb.desafio4all.fragments;
 
 /**
- * Created by barbosev on 22/03/2016.
+ * Created by barbosev on 30/11/2016.
  */
 
 import android.content.Context;
@@ -73,23 +73,8 @@ public class Map_Fragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void configBasicMap(GoogleMap googleMap) {
-        //LatLng sydney = new LatLng(-33.867, 151.206); //Cria uma coordenada de ponto para o mapa
-        //Configura o zoom da camera do mapa
-        //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
 
-        /**
-         * Adiciona um pino na posição da coordenada.
-         * Ao clicar em cima do pino exibirá o título Sidney e a descrição que está no snippet
-         */
-        /*googleMap.addMarker(new MarkerOptions()
-                .title("Sydney")
-                .snippet("Cidade mais populosa da Austrália.")
-                .position(sydney));*/
-        //getMyLocation();
 
-        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-
-        //LatLng myLocal = new LatLng(location.getLatitude(), location.getLongitude());
         LatLng myLocal;
         myLocal = mLocal;
 
