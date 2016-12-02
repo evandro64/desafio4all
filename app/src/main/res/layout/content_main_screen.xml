@@ -30,7 +30,7 @@
                 <FrameLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/teste">
+                    android:id="@+id/framelayoutstar">
 
                     <LinearLayout
                         android:id="@+id/linearTeste"
@@ -67,13 +67,19 @@
                         android:layout_below="@+id/linearMap"
                         android:layout_gravity="right" />
 
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+
                 </FrameLayout>
 
                 <LinearLayout
                     android:id="@+id/linearButtons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/teste"
+                    android:layout_below="@+id/framelayoutstar"
                     android:background="#FFFFFF"
                     android:orientation="horizontal"
                     android:layout_alignParentBottom="false">
@@ -207,8 +213,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="100dip"
                         android:id="@+id/imageButton7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/pinend"/>
 

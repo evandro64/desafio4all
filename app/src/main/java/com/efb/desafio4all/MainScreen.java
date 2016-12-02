@@ -71,7 +71,7 @@ public class MainScreen extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private ProgressBar progressImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +88,7 @@ public class MainScreen extends AppCompatActivity {
         fm = (FrameLayout)findViewById(R.id.framelayoutLocal);
         fm.setVisibility(View.VISIBLE);
 
+        progressImg = (ProgressBar)findViewById(R.id.progressBar);
         progress = (ProgressBar)findViewById(R.id.progressBarLocal);
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -116,7 +117,7 @@ public class MainScreen extends AppCompatActivity {
 
         // NetWorkImageView
         nwImg = (NetworkImageView) findViewById(R.id.netWorkImageView);
-        nwImg.setDefaultImageResId(R.drawable.load3);
+        nwImg.setDefaultImageResId(R.drawable.background);
 
         // Verifica resolução da Tela
         Configuration config = getResources().getConfiguration();
@@ -154,8 +155,6 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
-        progress = (ProgressBar)findViewById(R.id.progressBarLocal);
-
         Intent intent = getIntent();
         String value = intent.getStringExtra("id");
         getSelectLocal(value);
@@ -175,6 +174,7 @@ public class MainScreen extends AppCompatActivity {
                         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
                         toolbar.setSubtitle(selectedLocal.getCidade() + " - " + selectedLocal.getBairro());
                         Log.v("teste", "Response " + response);
+                        progressImg.setVisibility(View.GONE);
                         urlImage = selectedLocal.getUrlFoto();
                         nwImg.setImageUrl(urlImage, imageLoader);
 
@@ -190,8 +190,6 @@ public class MainScreen extends AppCompatActivity {
                         mAdapter.notifyDataSetChanged();
                         fm.setVisibility(View.GONE);
                         progress.setVisibility(View.GONE);
-
-                        LinearLayout ll = (LinearLayout)findViewById(R.id.linearTeste);
 
                         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(150, 150);
                         lp.setMargins(nwImg.getWidth() - 160, nwImg.getHeight() - 70, 0, 0);
